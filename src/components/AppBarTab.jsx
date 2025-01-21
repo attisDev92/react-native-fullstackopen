@@ -18,7 +18,7 @@ const AppBarTab = ({ textTab, route }) => {
   }, [pathname, route])
 
   return (
-    <Pressable style={pressableStyle}>
+    <Pressable style={[pressableStyle, styles.appBarContainer]}>
       <Link to={route}>
         <Text fontSize={'subheading'} fontWeight={'bold'} style={{ color: '#fff' }}>
           {textTab}
@@ -32,6 +32,9 @@ const styles = StyleSheet.create({
   active: {
     borderBottomColor: theme.colors.primary,
     borderBottomWidth: 5,
+  },
+  appBarContainer: {
+    marginInline: 5,
   },
 })
 

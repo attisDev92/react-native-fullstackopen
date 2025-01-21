@@ -4,8 +4,10 @@ import { NativeRouter } from 'react-router-native'
 
 export default function App() {
   return (
-    <NativeRouter>
-      <Main />
-    </NativeRouter>
+    <>
+      <NativeRouter>
+        <Main />
+      </NativeRouter>
+    </>
   )
 }
