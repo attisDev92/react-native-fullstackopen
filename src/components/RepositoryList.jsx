@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, View, StyleSheet } from 'react-native'
+import { FlatList, View, StyleSheet, Platform } from 'react-native'
 import { repositories } from '../data/repositories'
 import RepositoryItem from './RepositoryItem'
 
@@ -29,7 +29,10 @@ const RepositoryList = () => {
 
 const styles = StyleSheet.create({
   separator: {
-    height: 10,
+    height: Platform.select({
+      ios: 10,
+      android: 20,
+    }),
   },
 })
 
