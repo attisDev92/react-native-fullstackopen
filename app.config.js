@@ -28,5 +28,6 @@ export default {
   plugins: ['expo-router'],
   extra: {
     env: process.env.ENV,
+    base_uri: process.env.APOLLO_URI,
   },
 }
