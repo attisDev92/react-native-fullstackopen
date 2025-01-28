@@ -1,11 +1,38 @@
 import React from 'react'
 import { FlatList, View, StyleSheet, Platform } from 'react-native'
-import { repositories } from '../data/repositories'
 import RepositoryItem from './RepositoryItem'
+import useRepositories from '../hooks/useRepositories'
+import Text from './Text'
 
 const ItemSeparator = () => <View style={styles.separator} />
 
 const RepositoryList = () => {
+  const { repositories, loading, error } = useRepositories()
+
+  if (loading) {
+    return (
+      <View>
+        <Text>LOADING ...</Text>
+      </View>
+    )
+  }
+
+  if (error) {
+    return (
+      <View>
+        <Text>{error.message}</Text>
+      </View>
+    )
+  }
+
+  if (repositories.length === 0) {
+    return (
+      <View>
+        <Text>No repositories found.</Text>
+      </View>
+    )
+  }
+
   return (
     <FlatList
       data={repositories}
