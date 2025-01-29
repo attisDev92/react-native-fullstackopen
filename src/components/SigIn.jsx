@@ -6,6 +6,8 @@ import FormilTextInput from './FormikTextInpu'
 import { Formik } from 'formik'
 import theme from '../styles/theme'
 import * as yup from 'yup'
+import useSignIn from '../hooks/useSignIn'
+import AuthStorage from '../utils/authStorage'
 
 const initialValues = {
   username: '',
@@ -31,8 +33,17 @@ const SignIn = ({ onSubmit }) => {
 }
 
 const SignInForm = () => {
-  const onSubmit = (values) => {
-    console.log(values)
+  const { signIn } = useSignIn()
+
+  const onSubmit = async (values) => {
+    const authStorage = new AuthStorage('user')
+    const { username, password } = values
+    try {
+      const response = await signIn({ username, password })
+      await authStorage.setAccessToken(response.authenticate.accessToken)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return (
