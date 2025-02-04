@@ -1,40 +1,36 @@
-import React, { useEffect } from 'react'
-import { Pressable, StyleSheet } from 'react-native'
-import Text from './Text'
-import { Link, useLocation } from 'react-router-native'
-import theme from '../styles/theme'
-import { useState } from 'react'
+import React from 'react'
+import { Pressable, Text, StyleSheet } from 'react-native'
+import { useNavigate } from 'react-router-native' // Usamos useNavigate para navegar
 
-const AppBarTab = ({ textTab, route }) => {
-  const [pressableStyle, setPressableStyle] = useState('')
-  const { pathname } = useLocation()
+const AppBarTab = ({ textTab, route, onPress }) => {
+  const navigate = useNavigate()
 
-  useEffect(() => {
-    if (pathname === route) {
-      setPressableStyle(styles.active)
-    } else {
-      setPressableStyle('')
+  // Si no hay una función onPress proporcionada, usamos la ruta para navegar
+  const handlePress = () => {
+    if (onPress) {
+      onPress() // Si hay un onPress, lo ejecutamos (para Sign Out)
+    } else if (route) {
+      navigate(route) // Si no hay onPress, usamos la ruta para navegar
     }
-  }, [pathname, route])
+  }
 
   return (
-    <Pressable style={[pressableStyle, styles.appBarContainer]}>
-      <Link to={route}>
-        <Text fontSize={'subheading'} fontWeight={'bold'} style={{ color: '#fff' }}>
-          {textTab}
-        </Text>
-      </Link>
+    <Pressable onPress={handlePress} style={styles.tab}>
+      <Text style={styles.tabText}>{textTab}</Text>
     </Pressable>
   )
 }
 
 const styles = StyleSheet.create({
-  active: {
-    borderBottomColor: theme.colors.primary,
-    borderBottomWidth: 5,
+  tab: {
+    padding: 10,
+    marginHorizontal: 10,
+    backgroundColor: '#f4f4f4',
+    borderRadius: 5,
   },
-  appBarContainer: {
-    marginInline: 5,
+  tabText: {
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 })
 

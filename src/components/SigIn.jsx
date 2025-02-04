@@ -1,13 +1,12 @@
-import React from 'react'
-import Text from './Text'
+import { Formik } from 'formik'
 import { Pressable, StyleSheet, View } from 'react-native'
+import Text from './Text'
 import Constants from 'expo-constants'
 import FormilTextInput from './FormikTextInpu'
-import { Formik } from 'formik'
 import theme from '../styles/theme'
 import * as yup from 'yup'
 import useSignIn from '../hooks/useSignIn'
-import AuthStorage from '../utils/authStorage'
+import { useNavigate } from 'react-router-native'
 
 const initialValues = {
   username: '',
@@ -34,13 +33,13 @@ const SignIn = ({ onSubmit }) => {
 
 const SignInForm = () => {
   const { signIn } = useSignIn()
+  const navigate = useNavigate()
 
   const onSubmit = async (values) => {
-    const authStorage = new AuthStorage('user')
     const { username, password } = values
     try {
-      const response = await signIn({ username, password })
-      await authStorage.setAccessToken(response.authenticate.accessToken)
+      await signIn({ username, password })
+      navigate('/')
     } catch (e) {
       console.log(e)
     }
